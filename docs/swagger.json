@@ -1,0 +1,231 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API para analisis de datos",
+    "description": "Documentación para uso de endpoints",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/consultas",
+      "description": "Local"
+    },
+    {
+      "url": "https://dev-api.neumobot.com/gestion_formularios/consultas",
+      "description": "Dev"
+    },
+    {
+      "url": "https://pruebas-api.neumobot.com/gestion_formularios/consultas",
+      "description": "Test"
+    },
+    {
+      "url": "http://neumobot.com:6000/gestion_formularios/consultas",
+      "description": "Prod"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Endpoints",
+      "description": "Información y pruebas"
+    }
+  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/v1/gestion/formularios/grupos": {
+      "post": {
+        "tags": ["Endpoints"],
+        "summary": "Obtener respuesta de formularios por grupos",
+        "requestBody": {
+          "description": "Recibe las variables del formulario que se desean obtener y la variable por la cual se van a agrupar",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/grupo"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Envia datos de cabecera y usuarios para gráfica"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/api/v1/gestion/formularios/descarga": {
+      "post": {
+        "tags": ["Endpoints"],
+        "summary": "Descargar respuesta de formularios",
+        "requestBody": {
+          "description": "Recibe las variables del formulario que se desean obtener",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/descarga"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Envia link para descargar archivo"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/api/v1/gestion/formularios/colecciones": {
+      "get": {
+        "tags": ["Endpoints"],
+        "summary": "Envía las colecciones habilitadas para búsqueda de información",
+
+        "responses": {
+          "200": {
+            "description": "Colecciones disponibles"
+          }
+        }
+      }
+    },
+    "/api/v1/gestion/formularios/{collection}": {
+      "get": {
+        "tags": ["Endpoints"],
+        "summary": "Envía las nombres de los documentos existentes en una colección",
+        "responses": {
+          "200": {
+            "description": "Consulta de documentos de una colección"
+          },
+          "400": {
+            "description": "Error encontrando documentos de una colección"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "collection",
+            "required": true,
+            "description": "Colección de esquemas de la que se desea obtener los formularios",
+            "schema": {
+              "$ref": "#/definitions/coleccion"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/gestion/formularios/variables/{collection}&{key}": {
+      "get": {
+        "tags": ["Endpoints"],
+        "summary": "Envía las nombres de los documentos existentes en una colección",
+
+        "responses": {
+          "200": {
+            "description": "Consulta de las variables de un esquema"
+          },
+          "400": {
+            "description": "Error encontrando las variables de un esquema"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "collection",
+          "required": true,
+          "description": "Nombre de la coleccion",
+          "schema": {
+            "$ref": "#/definitions/coleccion"
+          }
+        },
+        {
+          "in": "path",
+          "name": "key",
+          "required": true,
+          "description": "Key del formulario a buscar",
+          "schema": {
+            "$ref": "#/definitions/key"
+          }
+        }
+      ]
+    }
+  },
+
+  "definitions": {
+    "grupo": {
+      "properties": {
+        "fechaInicial": {
+          "type": "number",
+          "example": 1568402369757
+        },
+        "fechaFinal": {
+          "type": "number",
+          "example": 1568782800000
+        },
+        "consulta": {
+          "type": "array",
+          "example": [
+            {
+              "coleccion": "Formularios",
+              "key": "signos_vitales",
+              "variables": ["documento", "key", "variable1", "variable8"]
+            }
+          ]
+        },
+        "grupo": {
+          "type": "string",
+          "example": "variable8"
+        }
+      }
+    },
+    "descarga": {
+      "properties": {
+        "fechaInicial": {
+          "type": "number",
+          "example": 1568402369757
+        },
+        "fechaFinal": {
+          "type": "number",
+          "example": 1568782800000
+        },
+        "consulta": {
+          "type": "array",
+          "example": [
+            {
+              "coleccion": "Formularios",
+              "key": "signos_vitales",
+              "variables": ["documento", "key", "variable1", "variable8"]
+            }
+          ]
+        }
+      }
+    },
+    "coleccion": {
+      "properties": {
+        "coleccion": {
+          "type": "string",
+          "example": "Formularios"
+        }
+      }
+    },
+    "key": {
+      "properties": {
+        "key": {
+          "type": "string",
+          "example": "resumen_paciente"
+        }
+      }
+    }
+  }
+}

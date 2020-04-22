@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "camelcase": 0,
+    "no-underscore-dangle": 0,
+    "import/imports-first": [
+      "error",
+      "absolute-first"
+    ],
+    "import/newline-after-import": "error",
+    "class-methods-use-this": 0,
+    "import/no-dynamic-require": 0,
+    "no-param-reassign": 0,
+    "no-console": 0,
+    "global-require": 0,
+    "no-return-await": 0,
+    "no-await-in-loop": 0,
+    "no-continue": 0,
+    "no-plusplus": 0,
+    "no-useless-escape": 0
+  }
+}
